@@ -1,0 +1,118 @@
+<base href="../../" target="_parent">
+<meta charset="utf-8">
+<title>Iotek在线书店</title>
+<style type="text/css" media="screen">
+    @import url('css/common.css');
+    @import url('css/cart.css');
+</style>
+
+<article>
+    <header>提交订单</header>
+    <section>
+       <header>购物车信息</header>
+       <ul class="caption">
+           <li class="id">编号</li>
+           <li class="name">名称</li>
+           <li class="price">单价</li>
+           <li class="quantity">数量(本)</li>
+           <li class="total">小记</li>
+           <li class="operator">操作</li>
+         </ul>
+         <ul class="odd">
+             <li class="id">1</li>
+             <li class="name">Java OOP</li>
+             <li class="price">¥80.00</li>
+             <li class="quantity"><input name="quantity" value="1"></li>
+             <li class="total">¥80.00</li>
+             <li class="operator"><a href="">删除</a></li>
+           </ul>
+           <ul class="even">
+               <li class="id">2</li>
+               <li class="name">Android</li>
+               <li class="price">¥90.50</li>
+               <li class="quantity"><input name="quantity" value="2"></li>
+               <li class="total">¥181.00</li>
+               <li class="operator"><a href="">删除</a></li>
+             </ul>
+             <footer>合计: 261.00¥</footer>
+   </section>
+   <!---->
+   <section>
+      <header>收货人</header>
+      <ul class="caption">
+          <li class="check">选择</li>
+          <li class="id">编号</li>
+          <li class="full_name">姓名</li>
+          <li class="tel">电话</li>
+          <li class="operator">操作</li>
+        </ul>
+        <ul class="odd">
+            <li class="check" value="1"><input type="radio" name="user" ></li>
+            <li class="id">1</li>
+            <li class="full_name">莉莉</li>
+            <li class="tel">1234567</li>
+            <li class="operator"><a href="">删除</a></li>
+          </ul>
+          <ul class="even">
+              <li class="check" value="2"><input type="radio" name="user" ></li>
+              <li class="id">2</li>
+              <li class="full_name">皮皮</li>
+              <li class="tel">1234567</li>
+              <li class="operator"><a href="">删除</a></li>
+            </ul>
+            <ul class="add">
+                <li class="real_name">姓名:<input type="text" name="name"></li>
+                <li class="tel">联系号码:<input type="text" name="tel"></li>
+                <li class="operator">
+                    <button>添加</button>
+                </li>
+             </ul>
+  </section>
+  <!---->
+  <section>
+     <header>收货地址</header>
+     <ul class="caption">
+         <li class="check">选择</li>
+         <li class="id">编号</li>
+         <li class="province">省/直辖市</li>
+         <li class="city">区/市/县</li>
+         <li class="street">街道/详细地址</li>
+         <li class="operator">操作</li>
+       </ul>
+       <ul class="odd">
+           <li class="check" value="1"><input type="radio" name="user" ></li>
+           <li class="id">1</li>
+           <li class="province">北京</li>
+           <li class="city">朝阳</li>
+           <li class="street">xxxxxxxxxxxxxxxxxxxxxxxxx</li>
+           <li class="operator"><a href="">删除</a></li>
+         </ul>
+         <ul class="even">
+             <li class="check" value="2"><input type="radio" name="user" ></li>
+             <li class="id">1</li>
+             <li class="province">北京</li>
+             <li class="city">朝阳</li>
+             <li class="street">xxxxxxxxxxxxxxxxxxxxxxxxx</li>
+             <li class="operator"><a href="">删除</a></li>
+           </ul>
+           <ul class="add">
+               <li class="province">省/直辖市: 
+                   <input name="province" list="province_list" />
+                   <datalist id="province_list">
+                       <option value="1xxxxxxxxx">
+                       <option value="2xxxxxxxxx">
+                   </datalist>
+               </li>
+               <li class="city">区/市/县: 
+               <input name="city" list="city_list" />
+               <datalist id="city_list">
+                   <option value="1xxxxxxxxx">
+                   <option value="2xxxxxxxxx">
+               </datalist>
+               </li>
+               <li class="street">街道/详细地址: <input name="street"></li>
+               <li class="operator"><button>添加</button></li>
+            </ul>
+ </section>
+ <footer><button>提交订单</button></footer>
+</article>

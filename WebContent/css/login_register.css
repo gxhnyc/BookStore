@@ -1,0 +1,51 @@
+body{
+	background:url(../images/login_register.jpg) fixed no-repeat;
+	background-size:100%;
+	
+}
+
+article{
+    width:49.9%;
+    height:590px;
+}
+article form{
+    width:26em;
+    padding-top:120px;
+    margin:0px auto;
+    font-size: 1.2em;
+}
+article form header{
+    text-align:center;
+    text-shadow: #ddd 2px 2px 1px;
+}
+article form p {
+    margin-top:10px;
+    margin-left:100px;
+    text-align:left;
+}
+
+#bp{
+		padding-left:125px;
+}
+#bp2{
+		padding-left:80px;
+}
+article form p button{
+	color:aqua;
+}
+article form p button:hover{
+	color:red;
+	font-weight:bold;
+	background-color:aqua;
+}
+
+article.register{
+	color:#fff;
+}
+
+article.login{
+	color:#fff;
+    margin-left:49.9%;
+    margin-top:-550px;
+    border-left: 1px dotted #999;
+}
