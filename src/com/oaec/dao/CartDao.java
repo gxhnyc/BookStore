@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
+import com.oaec.pojo.Books;
 import com.oaec.pojo.CartDetails;
 import com.oaec.util.MRowMapper;
 import com.oaec.util.MyJDBCTemp;
@@ -150,6 +151,26 @@ public class CartDao {
 		MyJDBCTemp jdbc = new MyJDBCTemp();
 		Map<String,Object> map=jdbc.queryForMap("select * from carts where account_id=?", account_id);
 		return map;
+	}
+	/**
+	 * 通过book_id找到图书价格
+	 * @param book_id
+	 * @return
+	 */
+	public double findBookPrice(int book_id) {
+		MyJDBCTemp jdbc = new MyJDBCTemp();
+		Books book=(Books) jdbc.queryForObject(new MRowMapper() {
+
+			@Override
+			public Object mappingRow(ResultSet rs) throws Exception {
+				Books book=new Books();
+				book.setId(rs.getInt("id"));
+				book.setName(rs.getString("name"));
+				book.setSelling_price(rs.getDouble("selling_price"));
+				return book;
+			}},"select * from books where id=?", book_id);
+		//double price=map.get("SELLING_PRICE").toString();
+		return book.getSelling_price();
 	}
 	
 

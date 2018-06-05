@@ -81,5 +81,14 @@ public class CartService {
 		
 		return cd.findCartID(account_id);
 	}
+	/**
+	 * 通过book_id找到图书价格
+	 * @param book_id
+	 * @return
+	 */
+	public double findBookPrice(int book_id) {
+		CartDao cd = new CartDao();
+		return cd.findBookPrice(book_id);
+	}
 
 }

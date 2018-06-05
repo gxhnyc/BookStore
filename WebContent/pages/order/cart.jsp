@@ -39,7 +39,7 @@
 					+ arr[i].book_name +"</li>"+"<li class='price'>¥"
 					+ arr[i].subtotal/arr[i].quantity
 					+ "</li>"+"<li class='quantity'>"+"<input name='quantity' value='"+arr[i].quantity+"'></li>"
-					+ "<li class='total'>¥"+"<font id='subtotal'>"+ arr[i].subtotal+"</font>"+"</li>"
+					+ "<li class='total'>¥"+"<font name='subtotal'>"+ arr[i].subtotal+"</font>"+"</li>"
 					+ "<li class='operator'>"+"<a href=''>删除</a>"+"</li>"
 					+"</ul>";
 		          			
@@ -51,7 +51,7 @@
 		});
 		
 	/* 购物项数量标签（input）失去焦点后，更改数据库对应表的数量 */
-	$(".caption").on('blur', 'input[name=quantity]', function(){
+	$("body").on('blur', 'input[name=quantity]', function(){
 		console.log("进入modquantity");
 		var num=$("input[name=quantity]").val();
 		var bid=$("#bid").text();
@@ -60,9 +60,10 @@
 			type:'post',
 			data:{"num":num,"bid":bid},
 			success:function(data){
-				
-				alert(data+"modquantity");
-				$("font[1]").text(data);
+				/* 数组转换成对象数组 */
+				var arr = JSON.parse(data);
+				alert(arr+"modquantity");
+				$("font[name=subtotal]").text(arr);
 			}
 			
 		});

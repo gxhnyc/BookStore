@@ -41,10 +41,11 @@ public class ModQuantityServlet extends HttpServlet {
 		//5.调用业务层,修改购物车内图书数量的方法
 			//CartService cs = new CartService();
 			int row = cs.modQuantity(num,cid, book_id);
+			double price=cs.findBookPrice(book_id);
+			double subtotal=price*num;
+			System.out.println("--ModQuantityServlet:成功修改" + row+"--条数据:￥"+subtotal);
 
-			System.out.println("--ModQuantityServlet:成功修改" + row+"--条数据");
-
-			JSONArray jarr = JSONArray.fromObject(row);
+			JSONArray jarr = JSONArray.fromObject(subtotal);
 			// System.out.println(jarr);
 			resp.getWriter().print(jarr);
 		} else {// 跳转至用户登录界面
