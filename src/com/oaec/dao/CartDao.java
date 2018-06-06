@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
-import com.oaec.pojo.Books;
 import com.oaec.pojo.CartDetails;
 import com.oaec.util.MRowMapper;
 import com.oaec.util.MyJDBCTemp;
@@ -136,41 +135,32 @@ public class CartDao {
 	 * @param book_id
 	 * @return
 	 */
-	public int modQuantity(int num,int cid, int book_id) {
+	public int modQuantity(int num,int cart_id, int book_id) {
 		MyJDBCTemp jdbc = new MyJDBCTemp();
 		int row=0;
-		row=jdbc.update("update cart_item set quantity=? where cart_id=? and book_id=?",num, cid,book_id);
+		row=jdbc.update("update cart_item set quantity=? where cart_id=? and book_id=?",num, cart_id,book_id);
 		return row;
 	}
 	/**
-	 * 通过用户id获取cart_id
+	 * 通过用户id获取购物车id
 	 * @param account_id
 	 * @return
 	 */
-	public Map<String,Object> findCartID(int account_id) {
-		MyJDBCTemp jdbc = new MyJDBCTemp();
-		Map<String,Object> map=jdbc.queryForMap("select * from carts where account_id=?", account_id);
-		return map;
+	public Map<String, Object> findCartID(int account_id) {
+		MyJDBCTemp jdbc = new MyJDBCTemp();		
+		return jdbc.queryForMap("select * from carts where account_id=?", account_id);
 	}
 	/**
-	 * 通过book_id找到图书价格
-	 * @param book_id
+	 * 获取cartDetail
+	 * @param book_id 
+	 * @param account_id 
 	 * @return
 	 */
-	public double findBookPrice(int book_id) {
-		MyJDBCTemp jdbc = new MyJDBCTemp();
-		Books book=(Books) jdbc.queryForObject(new MRowMapper() {
-
-			@Override
-			public Object mappingRow(ResultSet rs) throws Exception {
-				Books book=new Books();
-				book.setId(rs.getInt("id"));
-				book.setName(rs.getString("name"));
-				book.setSelling_price(rs.getDouble("selling_price"));
-				return book;
-			}},"select * from books where id=?", book_id);
-		//double price=map.get("SELLING_PRICE").toString();
-		return book.getSelling_price();
+	public Map<String,Object> getSubtotal(int account_id, int book_id) {
+		MyJDBCTemp jdbc = new MyJDBCTemp();		
+		return jdbc.queryForMap("select cs.cid cart_id,b.id book_id,b.name book_name,ci.quantity quantity,b.selling_price price,ci.quantity*b.selling_price subtotal "
+				+ "from books b,cart_item ci,carts cs where b.id=ci.book_id and ci.cart_id=cs.cid and "
+				+ "cs.account_id=? and cs.status=0 and ci.book_id=?", account_id,book_id);
 	}
 	
 

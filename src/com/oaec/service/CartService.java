@@ -66,29 +66,38 @@ public class CartService {
 		}
 		return itemlist;
 	}
-
-	public int modQuantity(int num,int cid, int book_id) {
+	/**
+	 * 修改图书数量
+	 * @param num
+	 * @param account_id
+	 * @param book_id
+	 * @return
+	 */
+	public int modQuantity(int num,int cart_id, int book_id) {
 		CartDao cd = new CartDao();
 		
-		return cd.modQuantity(num,cid,book_id);
+		return cd.modQuantity(num,cart_id,book_id);
 	}
-
-	/*
-	 * 通过用户id获取cart_id
+	/**
+	 * 通过用户id获取购物车id
+	 * @param account_id
+	 * @return
 	 */
-	public Map<String,Object> findCartID(int account_id) {
+	public Map<String, Object> findCartID(int account_id) {
 		CartDao cd = new CartDao();
 		
 		return cd.findCartID(account_id);
 	}
 	/**
-	 * 通过book_id找到图书价格
+	 * 获取cartDetail
+	 * @param account_id
 	 * @param book_id
 	 * @return
 	 */
-	public double findBookPrice(int book_id) {
+	public Map<String,Object> getSubtotal(int account_id, int book_id) {
 		CartDao cd = new CartDao();
-		return cd.findBookPrice(book_id);
+		
+		return cd.getSubtotal(account_id,book_id);
 	}
 
 }

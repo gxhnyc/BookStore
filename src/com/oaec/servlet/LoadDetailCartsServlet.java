@@ -26,11 +26,12 @@ public class LoadDetailCartsServlet extends HttpServlet {
 					int account_id = Integer.parseInt(map.get("ID").toString());
 					// 2.调用业务层,查询购物车方法
 					CartService cs = new CartService();
-					List<CartDetails> list = cs.findCartsByAccountID(account_id);
+					List<CartDetails> list = cs.findCartsByAccountID(account_id);					
 					
-			
+					req.getSession().setAttribute("cartList", list);
 					System.out.println("LoadDetailCartsServlet:" + list);
 			
+								
 					JSONArray jarr = JSONArray.fromObject(list);
 					//System.out.println(jarr);
 					resp.getWriter().print(jarr);
