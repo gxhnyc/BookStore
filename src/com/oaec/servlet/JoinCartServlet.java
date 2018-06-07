@@ -19,14 +19,14 @@ public class JoinCartServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 1.µÃµ½book_id;
+		// 1.å¾—åˆ°book_id;
 		int book_id = Integer.parseInt(req.getParameter("bid"));
-		// 2.µÃµ½ÓÃ»§id
+		// 2.å¾—åˆ°ç”¨æˆ·id
 		Map<String, Object> map = (Map<String, Object>) req.getSession().getAttribute("userMap");
 		//System.out.println("--userMap:" + map);
 		if(map!=null||map.size()>0) {
 			int account_id = Integer.parseInt(map.get("ID").toString());
-			// 3.µ÷ÓÃÒµÎñ²ã,¼ÓÈë¹ºÎï³µ·½·¨
+			// 3.å¾—åˆ°è´­ç‰©è½¦å†…å®¹
 			CartService cs = new CartService();
 			List<CartDetails> list = cs.joincart(account_id, book_id);
 	
@@ -35,8 +35,8 @@ public class JoinCartServlet extends HttpServlet {
 			JSONArray jarr = JSONArray.fromObject(list);
 			//System.out.println(jarr);
 			resp.getWriter().print(jarr);
-		}else {//Ìø×ªÖÁÓÃ»§µÇÂ¼½çÃæ
-			System.out.println("Ìø×ªÖÁÓÃ»§µÇÂ¼½çÃæ:login_register.jsp");
+		}else {//ç™»å½•å¤±è´¥
+			System.out.println("ç™»å½•å¤±è´¥:login_register.jsp");
 			int flag=1;
 			JSONArray jarr = JSONArray.fromObject(flag);
 			resp.getWriter().print(jarr);			

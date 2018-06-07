@@ -49,6 +49,35 @@
 			}
 
 		});
+		
+		/* ----------删除 ------------ */
+		//1. 注册事件
+		$("button[name=rmitem]").click(function() {
+			/* //2. 获取button的lang属性
+			var number =  $(this).attr("lang");//关联book_id的值 */
+			//找到当前标签中第一个是ul的父节点，然后拿到属性为lang的值，也就是商品(书籍)的id
+			var book_id = $(this).parents("ul:first").attr("lang");
+			//得到book_id对应的ul
+			var ul= $(this).parents("ul:first");
+			$.ajax({
+				url : 'rmitem',
+				type : 'post',
+				data : {
+					'book_id' : book_id
+				},
+				success : function(data) {
+
+					/* var arr = JSON.parse(data); */
+					alert(data);
+					ul.remove();
+
+				}
+			});
+			
+			
+			
+			
+		});
 	});
 </script>
 
@@ -78,7 +107,7 @@
 					<li class="quantity"><input name="quantity"
 						value="${cart.quantity }" lang="${cart.quantity }"></li>
 					<li class="total">¥<font name="ft" id="${cart.book_id }">${cart.subtotal }</font></li>
-					<li class="operator"><button id="${cart.book_id }">删除</button></li>
+					<li class="operator"><button name="rmitem" lang="${cart.book_id }">删除</button></li>
 				</ul>
 			</c:forEach>
 		</section>

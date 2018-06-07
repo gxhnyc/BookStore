@@ -18,47 +18,47 @@ import com.oaec.service.RegisterService;
 import net.sf.json.JSONArray;
 
 public class LoginServlet extends HttpServlet {
-	//private static int logflag;//µÇÂ¼±êÖ¾
+	//private static int logflag;//ç™»å½•æ ‡å¿—Ö¾
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		LoginService ls = new LoginService();// newÒ»¸ö×¢²á·şÎñÀà¶ÔÏó
+		LoginService ls = new LoginService();// newä¸€ä¸ªæ³¨å†ŒæœåŠ¡ç±»å¯¹è±¡
 
 		
 		String op=req.getParameter("op");
 		//1.op==
-		if(op!=null&&op.equals("µÇÂ¼")) {
-			String username = req.getParameter("logname");// »ñÈ¡×¢²áÓÃ»§Ãû
+		if(op!=null&&op.equals("ç™»å½•")) {
+			String username = req.getParameter("logname");//è·å–æ³¨å†Œç”¨æˆ·å
 			String password = req.getParameter("logpwd");
 			//System.out.println("username:" + username + ",password:" + password);
-			Map<String,Object> userMap = ls.userLogin(username, password);//µ÷ÓÃ·şÎñ²ãµÄuserLogin()·½·¨,½øĞĞµÇÂ¼ÅĞ¶Ï,·µ»ØÓÃ»§ĞÅÏ¢(map)
+			Map<String,Object> userMap = ls.userLogin(username, password);//è°ƒç”¨æœåŠ¡å±‚çš„userLogin()æ–¹æ³•,è¿›è¡Œç™»å½•åˆ¤æ–­,è¿”å›ç”¨æˆ·ä¿¡æ¯(map)
 			int lognum=userMap.size();
 			if (lognum > 0) {
-				System.out.println("¹§Ï²Äú,µÇÂ¼³É¹¦!"+userMap);
+				System.out.println("æ­å–œæ‚¨,ç™»å½•æˆåŠŸ!"+userMap);
 				System.out.println("logflag:"+lognum);
 				req.getSession().setAttribute("logflag", lognum);
 				req.getSession().setAttribute("userMap", userMap);
 				req.getRequestDispatcher("index.jsp").forward(req, resp);
 	
 			} else {
-				System.out.println("µÇÂ¼Ê§°Ü,ÇëÖØĞÂµÇÂ¼!");
+				System.out.println("ç™»å½•å¤±è´¥,è¯·é‡æ–°ç™»å½•!");
 				System.out.println("logflag:"+lognum);
 				req.getSession().setAttribute("logflag", lognum);
 				resp.sendRedirect("pages/login_register.jsp");
 			}
-		}else{//ÕÒ»ØÃÜÂë-----------------------------------------------------------------
-			System.out.println("ÕÒ»ØÃÜÂë----------");
-			String username = req.getParameter("findname");// »ñÈ¡ĞèÒªÕÒ»ØÃÜÂëµÄÓÃ»§Ãû
-			String email = req.getParameter("findemail");//»ñÈ¡¶ÔÓ¦ÓÊÏä
+		}else{//æ‰¾å›å¯†ç -----------------------------------------------------------------
+			System.out.println("æ‰¾å›å¯†ç ----------");
+			String username = req.getParameter("findname");//è·å–éœ€è¦æ‰¾å›å¯†ç çš„ç”¨æˆ·å
+			String email = req.getParameter("findemail");//è·å–å¯¹åº”é‚®ç®±
 			System.out.println("username:" + username + ",email:" + email);
 			
 			
-			//ÈôÕÒµ½ÏàÓ¦ÓÃ»§Êı¾İ
+			//è‹¥æ‰¾åˆ°ç›¸åº”ç”¨æˆ·æ•°æ®
 			Map<String,Object> fuserMap =ls.findPWD(username,email);
 			
 			if(fuserMap.size()>0) {	
-				System.out.println("LoginServlet:(Ìø×ªÖÁ³É¹¦ÕÒ»ØÃÜÂë)" + fuserMap);
+				System.out.println("LoginServlet:(è·³è½¬è‡³æˆåŠŸæ‰¾å›å¯†ç ))" + fuserMap);
 				/*req.setAttribute("findmap", fuserMap);
 				req.getRequestDispatcher("sucfindpwd.jsp").forward(req, resp);*/
 				JSONArray jarr = JSONArray.fromObject(fuserMap);
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 				
 			}
 			else {				
-				System.out.println("ÕË»§²»´æÔÚ£¡");	
+				System.out.println("è´¦æˆ·ä¸å­˜åœ¨!");	
 				
 				JSONArray jarr = JSONArray.fromObject(1);
 				resp.getWriter().println(jarr);			

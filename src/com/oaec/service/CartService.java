@@ -12,38 +12,38 @@ public class CartService {
 	public List<CartDetails> joincart(int account_id, int bid) {
 		CartDao cd = new CartDao();
 		/*
-		 * 1.²Ù×÷¼ÓÈë¹ºÎï³µÖ®Ç°,ÅĞ¶Ï¸ÃÓÃ»§¹ºÎï³µÊÇ·ñÎª¿Õ(carts±íÀïµÄstatus×Ö¶ÎÊÇ·ñÎª0,ÈôÓĞstatus=0µÄÊı¾İ,
-		 * Ôò×÷ĞŞ¸Ä,ÈôÃ»ÓĞ,ÔòÌí¼Ó),ÉèÖÃÒ»¸öcartflag±êÖ¾,ÅĞ¶ÏÊÇ·ñÌí¼Ó³É¹¦
+		 *  1.æ“ä½œåŠ å…¥è´­ç‰©è½¦ä¹‹å‰,åˆ¤æ–­è¯¥ç”¨æˆ·è´­ç‰©è½¦æ˜¯å¦ä¸ºç©º(cartsè¡¨é‡Œçš„statuså­—æ®µæ˜¯å¦ä¸º0,è‹¥æœ‰status=0çš„æ•°æ®,
+		 *  åˆ™ä½œä¿®æ”¹,è‹¥æ²¡æœ‰,åˆ™æ·»åŠ ),è®¾ç½®ä¸€ä¸ªcartflagæ ‡å¿—,åˆ¤æ–­æ˜¯å¦æ·»åŠ æˆåŠŸ
 		 */
 
-		int cartflag = 0;// ¹ºÎï³µÊÇ·ñÌí¼Ó³É¹¦µÄ±êÖ¾,1Îª³É¹¦
+		int cartflag = 0;// è´­ç‰©è½¦æ˜¯å¦æ·»åŠ æˆåŠŸçš„æ ‡å¿—,1ä¸ºæˆåŠŸ
 		Map<String, Object> cartmap = cd.findCartByStatus(account_id);
-		// ÅĞ¶Ï¹ºÎï³µstatus=0µÄ¼ÇÂ¼ÊÇ·ñ´æÔÚ,Èô²»´æÔÚ,ÔòÌí¼Ó¹ºÎï³µ(°ó¶¨ÓÃ»§),²¢Ìí¼Ó¹ºÎïÏî(°ó¶¨¹ºÎï³µid,°ó¶¨book_id)
+		// åˆ¤æ–­è´­ç‰©è½¦status=0çš„è®°å½•æ˜¯å¦å­˜åœ¨,è‹¥ä¸å­˜åœ¨,åˆ™æ·»åŠ è´­ç‰©è½¦(ç»‘å®šç”¨æˆ·),å¹¶æ·»åŠ è´­ç‰©é¡¹(ç»‘å®šè´­ç‰©è½¦id,
 		if (cartmap.size() < 1) {
 			System.out.println("CartService:cartmap.size()--"+cartmap.size());
 			cartflag = cd.newCartsandItem(account_id, bid);
-		} // ¹ºÎï³µstatus=0µÄ¼ÇÂ¼´æÔÚ,µã»÷"¼ÓÈë¹ºÎï³µ"ºó,¸Ä±ä¶ÔÓ¦cart_itemµÄÊıÁ¿
+		} // è´­ç‰©è½¦status=0çš„è®°å½•å­˜åœ¨,ç‚¹å‡»"åŠ å…¥è´­ç‰©è½¦"å,æ”¹å˜å¯¹åº”cart_itemçš„æ•°é‡
 		else{
-			// µÃµ½cart_id
+			// å¾—åˆ°cart_id
 			int cart_id = Integer.parseInt(cartmap.get("CID").toString());
-			// Ìí¼ÓÊé¼®µÄ¹ºÎïÏî,¼ÈÈ»ÒÑ´æÔÚ¹ºÎï³µ£¬ÄÇÃ´¾ÍÒªÏÈÅĞ¶Ï¸Ã¹ºÎï³µÏÂÊÇ·ñÓĞ¶ÔÓ¦Êé¼®ĞÅÏ¢
+			// æ·»åŠ ä¹¦ç±çš„è´­ç‰©é¡¹,æ—¢ç„¶å·²å­˜åœ¨è´­ç‰©è½¦ï¼Œé‚£ä¹ˆå°±è¦å…ˆåˆ¤æ–­è¯¥è´­ç‰©è½¦ä¸‹æ˜¯
 			Map<String, Object> itemmap = cd.findItemByID(cart_id, bid);
-			// ÈôÊé¼®ÒÑ´æÔÚ,ÔòÔÚµã»÷"¼ÓÈë¹ºÎï³µ"ºó,¸Ä±äÊé¼®¶ÔÓ¦µÄitemµÄquantity(+1)
+			// è‹¥ä¹¦ç±å·²å­˜åœ¨,åˆ™åœ¨ç‚¹å‡»"åŠ å…¥è´­ç‰©è½¦"å,æ”¹å˜ä¹¦ç±å¯¹åº”çš„itemçš„quantity(+1)
 			if (itemmap.size() > 0) {
 				int quantity = Integer.parseInt(itemmap.get("QUANTITY").toString());
-				System.out.println("CartService:ÒÑ¾­ÓĞ"+bid+"Õâ±¾Êé,ÊıÁ¿¼Ó1");
+				System.out.println("CartService:å·²ç»æœ‰"+bid+"è¿™æœ¬ä¹¦,æ•°é‡åŠ 1");
 				cd.changeQuantity(quantity+1, cart_id, bid);
 			}
-			// ÈôÃ»ÓĞÊé¼®¶ÔÓ¦µÄ¹ºÎïÏî,ÔòÌí¼ÓÊé¼®µÄ¹ºÎïÏî,²¢½«quantityÉèÖÃÎª1;
+			// è‹¥æ²¡æœ‰ä¹¦ç±å¯¹åº”çš„è´­ç‰©é¡¹,åˆ™æ·»åŠ ä¹¦ç±çš„è´­ç‰©é¡¹,å¹¶å°†quantityè®¾ç½®ä¸º1;
 			else {
 				cd.addItem(cart_id, bid);
 			}
 		}
 
 		List<CartDetails> list = null;
-		// ÒÔÉÏÓï¾äÊµÏÖÁË:Ìí¼Ó¹ºÎï³µ,Ìí¼ÓÊé¼®¶ÔÓ¦µÄ¹ºÎïÏî,¹ºÎï³µÓë¹ºÎïÏî¹ØÁª,ĞŞ¸Ä¹ºÎïÏîµÄÊıÁ¿µÈ²Ù×÷
-		// ²éÑ¯³öµã»÷"¼ÓÈë¹ºÎï³µ" ºóÊı¾İ¿â¸Ä±äµÄÊı¾İ,²¢´¢ÔÚCartItemÊµÌåÖĞ
-		// Í¨¹ıaccount_idÒÔ¼°¹ºÎï³µµÄstatus²éÑ¯³öËùĞèÒªµÄĞÅÏ¢
+		// ä»¥ä¸Šè¯­å¥å®ç°äº†:æ·»åŠ è´­ç‰©è½¦,æ·»åŠ ä¹¦ç±å¯¹åº”çš„è´­ç‰©é¡¹,è´­ç‰©è½¦ä¸è´­ç‰©é¡¹å…³è”,ä¿®æ”¹è´­ç‰©é¡¹çš„æ•°é‡ç­‰æ“ä½œ
+				// æŸ¥è¯¢å‡ºç‚¹å‡»"åŠ å…¥è´­ç‰©è½¦" åæ•°æ®åº“æ”¹å˜çš„æ•°æ®,å¹¶å‚¨åœ¨CartItemå®ä½“ä¸­
+				// é€šè¿‡account_idä»¥åŠè´­ç‰©è½¦çš„statusæŸ¥è¯¢å‡ºæ‰€éœ€è¦çš„ä¿¡æ¯
 		list = cd.findCartDetails(account_id);
 		return list;
 
@@ -51,23 +51,23 @@ public class CartService {
 
 	public List<CartDetails> findCartsByAccountID(int account_id) {
 		CartDao cd = new CartDao();
-		List<CartDetails> itemlist=null;//ÓÃÀ´½ÓÊÕ²éÑ¯µ½µÄitems
-		// ÅĞ¶Ï¹ºÎï³µstatus=0µÄ¼ÇÂ¼ÊÇ·ñ´æÔÚ
+		List<CartDetails> itemlist=null;//ç”¨æ¥æ¥æ”¶æŸ¥è¯¢åˆ°çš„items
+		// åˆ¤æ–­è´­ç‰©è½¦status=0çš„è®°å½•æ˜¯å¦å­˜åœ¨
 		Map<String, Object> cartmap = cd.findCartByStatus(account_id);
-		//¹ºÎï³µ²»´æÔÚ,ÔòÏÔÊ¾Îª¿Õ
+		//è´­ç‰©è½¦ä¸å­˜åœ¨,åˆ™æ˜¾ç¤ºä¸ºç©º
 		if (cartmap.size() < 1) {
-			System.out.println("¹ºÎï³µÎª¿Õ,CartService:cartmap.size()--"+cartmap.size());	
+			System.out.println("è´­ç‰©è½¦ä¸ºç©º,CartService:cartmap.size()--"+cartmap.size());	
 			return null;
-		} // ¹ºÎï³µstatus=0µÄ¼ÇÂ¼´æÔÚ,µã»÷"¼ÓÈë¹ºÎï³µ"ºó,¸Ä±ä¶ÔÓ¦cart_itemµÄÊıÁ¿
+		} // è´­ç‰©è½¦status=0çš„è®°å½•å­˜åœ¨,ç‚¹å‡»"åŠ å…¥è´­ç‰©è½¦"å,æ”¹å˜å¯¹åº”cart_itemçš„æ•°é‡
 		else {
-			//¼ÈÈ»ÒÑ´æÔÚ¹ºÎï³µ£¬ÄÇÃ´¾ÍÒªÏÈÅĞ¶Ï¸Ã¹ºÎï³µÏÂÊÇ·ñÓĞÊé¼®ĞÅÏ¢
+			//æ—¢ç„¶å·²å­˜åœ¨è´­ç‰©è½¦ï¼Œé‚£ä¹ˆå°±è¦å…ˆåˆ¤æ–­è¯¥è´­ç‰©è½¦ä¸‹æ˜¯å¦æœ‰ä¹¦ç±ä¿¡æ¯
 			itemlist = cd.findCartDetails(account_id);
 			
 		}
 		return itemlist;
 	}
 	/**
-	 * ĞŞ¸ÄÍ¼ÊéÊıÁ¿
+	 * ä¿®æ”¹å›¾ä¹¦æ•°é‡
 	 * @param num
 	 * @param account_id
 	 * @param book_id
@@ -79,7 +79,7 @@ public class CartService {
 		return cd.modQuantity(num,cart_id,book_id);
 	}
 	/**
-	 * Í¨¹ıÓÃ»§id»ñÈ¡¹ºÎï³µid
+	 * é€šè¿‡ç”¨æˆ·idè·å–è´­ç‰©è½¦id
 	 * @param account_id
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public class CartService {
 		return cd.findCartID(account_id);
 	}
 	/**
-	 * »ñÈ¡cartDetail
+	 * è·å–cartDetail
 	 * @param account_id
 	 * @param book_id
 	 * @return
@@ -98,6 +98,17 @@ public class CartService {
 		CartDao cd = new CartDao();
 		
 		return cd.getSubtotal(account_id,book_id);
+	}
+	/**
+	 * åˆ é™¤è´­ç‰©è½¦ä¸‹çš„æŸæœ¬å›¾ä¹¦è´­ç‰©é¡¹
+	 * @param account_id
+	 * @param book_id
+	 */
+	public void rmBookItem(int account_id, int book_id) {
+		CartDao cd = new CartDao();
+		
+		cd.rmBookItem(account_id,book_id);
+		
 	}
 
 }

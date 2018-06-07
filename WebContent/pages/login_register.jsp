@@ -6,6 +6,7 @@
 <head>
     <base href="../pages" target="_parent">
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>小狐仙在线书店V1.1-用户注册、登录</title>
     <style type="text/css" media="screen">
         @import url('css/common.css');

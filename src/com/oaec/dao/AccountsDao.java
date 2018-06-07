@@ -9,7 +9,7 @@ import com.oaec.util.MyJDBCTemp;
 public class AccountsDao {
 	MyJDBCTemp jdbc=new MyJDBCTemp();
 	/*
-	 * Ìí¼ÓÓÃ»§
+	 * æ·»åŠ ç”¨æˆ·
 	 */
 	public int addUser(Accounts account) {
 		int num=jdbc.update("insert into accounts values(accounts_seq.nextval,?,?,?)", account.getAccount(),account.getPassword(),account.getEmail());
@@ -19,7 +19,7 @@ public class AccountsDao {
 		}else return 1;
 	}
 	/*
-	 * ÑéÖ¤ÓÃ»§
+	 * éªŒè¯ç”¨æˆ·
 	 */
 	public int verifyUser(String username) {
 		List <Map<String,Object>> list=jdbc.queryForList("select * from accounts where account=?", username);
@@ -36,7 +36,7 @@ public class AccountsDao {
 		
 	}
 	/**
-	 * ÓÃ»§µÇÂ¼,ÅĞ¶ÏÊÇ·ñ¿ÉÒÔµÇÂ¼
+	 *  ç”¨æˆ·ç™»å½•,åˆ¤æ–­æ˜¯å¦å¯ä»¥ç™»å½•
 	 * @param username
 	 * @param password
 	 * @return
@@ -45,7 +45,7 @@ public class AccountsDao {
 		return jdbc.queryForMap("select * from accounts where account=? and password=?",username, password);
 	}
 	/**
-	 * ÕÒ»ØÃÜÂëµÄ·½·¨£¬Í¨¹ıusernameÕÒµ½¶ÔÓ¦ÓÃ»§ĞÅÏ¢²¢·µ»Ø
+	 * æ‰¾å›å¯†ç çš„æ–¹æ³•ï¼Œé€šè¿‡usernameæ‰¾åˆ°å¯¹åº”ç”¨æˆ·ä¿¡æ¯å¹¶è¿”å›
 	 * @param username
 	 * @return
 	 */

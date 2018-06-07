@@ -4,6 +4,7 @@
 <head>
     <base href="../" target="iframe_content">
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>小狐仙在线书店-管理</title>
     <style type="text/css" media="screen">
         @import url('css/common.css');

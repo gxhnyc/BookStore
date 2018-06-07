@@ -1,5 +1,9 @@
 package com.oaec.pojo;
-
+/**
+ * 
+ * @author Administrator
+ *
+ */
 public class Accounts {
 	private int id;
 	private String account;

@@ -11,7 +11,7 @@ import com.oaec.util.MyJDBCTemp;
 public class CartDao {
 
 	/**
-	 * 1.Í¨¹ıstatus²éÑ¯³ö¹ºÎï³µ(°ó¶¨ÓÃ»§id)µÄĞÅÏ¢
+	 * 1.é€šè¿‡statusæŸ¥è¯¢å‡ºè´­ç‰©è½¦(ç»‘å®šç”¨æˆ·id)çš„ä¿¡æ¯
 	 * 
 	 * @param account_id
 	 * @return map
@@ -23,9 +23,9 @@ public class CartDao {
 	}
 
 	/**
-	 * 2.ÔÚ²»´æÔÚstatus=0µÄ¹ºÎï³µÇé¿öÏÂ,<br>
-	 * Ìí¼Óstatus=0,°ó¶¨account_idµÄ¹ºÎï³µ<br>
-	 * ¼°°ó¶¨book_id,cart_idµÄ¹ºÎïÏî
+	 * 2.åœ¨ä¸å­˜åœ¨status=0çš„è´­ç‰©è½¦æƒ…å†µä¸‹,<br>
+	 * æ·»åŠ status=0,ç»‘å®šaccount_idçš„è´­ç‰©è½¦<br>
+	 * åŠç»‘å®šbook_id,cart_idçš„è´­ç‰©é¡¹
 	 * 
 	 * @param account_id
 	 * @param bid
@@ -35,15 +35,15 @@ public class CartDao {
 		MyJDBCTemp jdbc = new MyJDBCTemp();
 		int num = 0;
 		int flag = jdbc.update("insert into carts (cid,account_id,status) values(carts_seq.nextval,?,0)", account_id);
-		// 1.Ìí¼ÓÍê³Éºó£¬ĞèÒª»ñµÃ¶©µ¥µÄIDÎªºóĞøµÄ ¶©µ¥ÓëÊé¼®µÄ¹ØÁª±í×öÌí¼Ó
+		// 1.æ·»åŠ å®Œæˆåï¼Œéœ€è¦è·å¾—è®¢å•çš„IDä¸ºåç»­çš„ è®¢å•ä¸ä¹¦ç±çš„å…³è”è¡¨åšæ·»åŠ 
 		Map<String, Object> cartmap = jdbc.queryForMap("select * from carts where status=0 and account_id=?",
 				account_id);
 		int cart_id = Integer.parseInt(cartmap.get("CID").toString());
-		// 2.flag>0,Èô¹ºÎï³µÌí¼Ó³É¹¦,ÔòÌí¼Ó°ó¶¨book_id¼°cart_idµÄ¹ºÎïÏî
+		// 2.flag>0,è‹¥è´­ç‰©è½¦æ·»åŠ æˆåŠŸ,åˆ™æ·»åŠ ç»‘å®šbook_idåŠcart_idçš„è´­ç‰©é¡¹
 		if (flag > 0) {
 			num = jdbc.update("insert into cart_item values(?,?,1)", cart_id, bid);
 		} else {
-			System.out.println("¹ºÎï³µÌí¼ÓÊ§°Ü!----CartDao.newCartsandItem()");
+			System.out.println("è´­ç‰©è½¦æ·»åŠ å¤±è´¥!----CartDao.newCartsandItem()");
 		}
 		return num;
 	}
@@ -51,9 +51,8 @@ public class CartDao {
 	
 
 	/**
-	 * 3.Í¨¹ıcart_id,book_idÀ´²éÕÒ<br>
-	 * ÊÇ·ñÒÑ´æÔÚ¶ÔÓ¦Êé¼®µÄ¹ºÎïÏî
-	 * 
+	 * 3.é€šè¿‡cart_id,book_idæ¥æŸ¥æ‰¾<br>
+	 * æ˜¯å¦å·²å­˜åœ¨å¯¹åº”ä¹¦ç±çš„è´­ç‰©é¡¹
 	 * @param cart_id
 	 * @param bid
 	 * @return itemmap
@@ -66,7 +65,7 @@ public class CartDao {
 	}
 
 	/**
-	 * 4.µã»÷"¼ÓÈë¹ºÎï³µ"ºó,ĞŞ¸Ä¶ÔÓ¦Êé¼®¹ºÎïÏîµÄÊıÁ¿(+1)
+	 *4.ç‚¹å‡»"åŠ å…¥è´­ç‰©è½¦"å,ä¿®æ”¹å¯¹åº”ä¹¦ç±è´­ç‰©é¡¹çš„æ•°é‡(+1)
 	 * 
 	 * @param quantity
 	 * @param cart_id
@@ -80,7 +79,7 @@ public class CartDao {
 	}
 
 	/**
-	 * 5.ÔÚ¹ºÎï³µÏÂÃ»ÓĞÕÒµ½¶ÔÓ¦Êé¼®µÄ¹ºÎïÏî,ÔòÌí¼ÓÊé¼®¶ÔÓ¦µÄ¹ºÎïÏî,²¢½«quantityÉèÖÃÎª1
+	 * 5.åœ¨è´­ç‰©è½¦ä¸‹æ²¡æœ‰æ‰¾åˆ°å¯¹åº”ä¹¦ç±çš„è´­ç‰©é¡¹,åˆ™æ·»åŠ ä¹¦ç±å¯¹åº”çš„è´­ç‰©é¡¹,å¹¶å°†quantityè®¾ç½®ä¸º1
 	 * 
 	 * @param cart_id
 	 * @param book_id
@@ -93,7 +92,7 @@ public class CartDao {
 	}
 
 	/**
-	 * 6.¸ù¾İaccount_id²éÑ¯³öÊı¾İ¿âµÄÊı¾İ,ÒÔList½á¹û¼¯·µ»Ø
+	 * 6.æ ¹æ®account_idæŸ¥è¯¢å‡ºæ•°æ®åº“çš„æ•°æ®,ä»¥Listç»“æœé›†è¿”å›
 	 * 
 	 * @param account_id
 	 * @return List
@@ -121,7 +120,7 @@ public class CartDao {
 		return list;
 	}
 	/*
-	 * É¾³ıÊé¼®µÄ¹ºÎïÏî
+	 *åˆ é™¤ä¹¦ç±çš„è´­ç‰©é¡¹
 	 */
 	public void rmcartitem(int account_id, int book_id) {
 		MyJDBCTemp jdbc = new MyJDBCTemp();
@@ -129,7 +128,7 @@ public class CartDao {
 		
 	}
 	/**
-	 * ĞŞ¸ÄÍ¼ÊéÊıÁ¿µÄ·½·¨ 
+	 * ä¿®æ”¹å›¾ä¹¦æ•°é‡çš„æ–¹æ³• 
 	 * @param num
 	 * @param account_id
 	 * @param book_id
@@ -142,7 +141,7 @@ public class CartDao {
 		return row;
 	}
 	/**
-	 * Í¨¹ıÓÃ»§id»ñÈ¡¹ºÎï³µid
+	 * è·å–cart_id
 	 * @param account_id
 	 * @return
 	 */
@@ -151,7 +150,7 @@ public class CartDao {
 		return jdbc.queryForMap("select * from carts where account_id=?", account_id);
 	}
 	/**
-	 * »ñÈ¡cartDetail
+	 * è·å–cartDetail
 	 * @param book_id 
 	 * @param account_id 
 	 * @return
@@ -161,6 +160,16 @@ public class CartDao {
 		return jdbc.queryForMap("select cs.cid cart_id,b.id book_id,b.name book_name,ci.quantity quantity,b.selling_price price,ci.quantity*b.selling_price subtotal "
 				+ "from books b,cart_item ci,carts cs where b.id=ci.book_id and ci.cart_id=cs.cid and "
 				+ "cs.account_id=? and cs.status=0 and ci.book_id=?", account_id,book_id);
+	}
+	/**
+	 * åˆ é™¤è´­ç‰©è½¦ä¸‹çš„æŸæœ¬å›¾ä¹¦è´­ç‰©é¡¹
+	 * @param account_id
+	 * @param book_id
+	 */
+	public void rmBookItem(int account_id, int book_id) {
+		MyJDBCTemp jdbc = new MyJDBCTemp();		
+		jdbc.update("delete from cart_item where cart_id=(select cid cart_id from carts where account_id=? ) and book_id=?",account_id,book_id );
+		
 	}
 	
 
