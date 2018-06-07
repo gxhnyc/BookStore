@@ -22,9 +22,11 @@ public class JoinCartServlet extends HttpServlet {
 		// 1.得到book_id;
 		int book_id = Integer.parseInt(req.getParameter("bid"));
 		// 2.得到用户id
+		
+		System.out.println(req.getSession().getAttribute("userMap")+"--------------");
 		Map<String, Object> map = (Map<String, Object>) req.getSession().getAttribute("userMap");
 		//System.out.println("--userMap:" + map);
-		if(map!=null||map.size()>0) {
+		if(map!=null) {
 			int account_id = Integer.parseInt(map.get("ID").toString());
 			// 3.得到购物车内容
 			CartService cs = new CartService();
@@ -39,6 +41,9 @@ public class JoinCartServlet extends HttpServlet {
 			System.out.println("登录失败:login_register.jsp");
 			int flag=1;
 			JSONArray jarr = JSONArray.fromObject(flag);
+			//resp.sendRedirect("pages/login_register.jsp");
+			//req.getRequestDispatcher("pages/login_register.jsp").forward(req, resp);
+			
 			resp.getWriter().print(jarr);			
 		}
 	}

@@ -71,7 +71,7 @@
 												ul.text("");
 												var total = 0;
 												for (var i = 0; i < arr.length; i++) {
-													var html = "<li>"
+													var html = "<li name='rmli' lang='arr[i].book_id'>"
 															+ arr[i].book_name
 															+ "<ul>"
 															+ "<li>  编号:"
@@ -83,7 +83,7 @@
 															+ "<li>　小记:¥"
 															+ arr[i].subtotal
 															+ "</li>"
-															+ "<li class='operator'><button>删除</button></li>"
+															+ "<li class='operator'><button onclick='rmitem(arr[i].book_id)'>删除</button></li>"
 															+ "</ul>" + "</li>"
 													total += arr[i].subtotal;
 													ul.append(html);
@@ -91,11 +91,81 @@
 												$("#total")
 														.text("合计:¥" + total);
 											} else {
-												window.location.href = "http://localhost:8080/BookStore_V1.1-1/pages/login_register.jsp";//需要跳转的地址
+												window.location.href = "http://localhost:8080/BookStore_V1.1-2/pages/login_register.jsp";//需要跳转的地址
 											}
 										}
 									});
 						});
+		
+		//点击“提交”后，首先将购物车的session更新，然后跳转至pages/manager.jsp#conent/order/cart.jsp
+		$("#submitcarts").click(function(){
+			/* window.location.href */
+			$.ajax({
+				url:'loaddetailcart',
+				type:'post',
+				data:{},
+				success:function(data){
+					/*  alert(data);*/
+					
+					document.location.href="pages/manager.jsp#conent/order/cart.jsp";
+				}
+			
+			});
+			
+		});
+		
+		//点击"删除" ，删除购物项
+		function rmitem(book_id){
+			alert("点击删除");
+			var bid=book_id;
+			var li=$(this).parents("li:rmitem");
+			$.ajax({
+				url : 'rmitem',
+				type : 'post',
+				data : {
+					'book_id' : book_id
+				},
+				success : function(data) {
+
+					/* var arr = JSON.parse(data); */
+					alert(data);
+					li.remove();
+
+				}
+				
+			});
+			
+			
+			
+		}
+		
+		
+		
+		
+		/* $("button[name=rmitem]").click(function(){
+			alert("点击删除");
+			//1.得到name=rmli的父节点的lang属性值（绑定book_id）
+			var book_id=$(this).parents("li:rmitem").attr("lang");
+			//2.得到name=rmli的父节点
+			var li=$(this).parents("li:rmitem");
+			$.ajax({
+				url : 'rmitem',
+				type : 'post',
+				data : {
+					'book_id' : book_id
+				},
+				success : function(data) {
+
+					/* var arr = JSON.parse(data); */
+					/* alert(data);
+					li.remove();
+
+				}
+				
+			}); 
+		}); */
+		
+		
 	});
 </script>
 
@@ -172,8 +242,7 @@
 			</ul>
 			<footer>
 				<font id="total"></font>
-				<button
-					onclick="document.location.href='pages/manager.jsp#conent/order/cart.jsp'">
+				<button id="submitcarts">
 					提交</button>
 			</footer>
 		</section>

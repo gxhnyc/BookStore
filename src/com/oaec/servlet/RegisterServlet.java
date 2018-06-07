@@ -15,9 +15,9 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		RegisterService rs = new RegisterService();// newÒ»¸ö×¢²á·şÎñÀà¶ÔÏó
+		RegisterService rs = new RegisterService();// newÒ»ä¸€ä¸ªRegisterService
 
-		String username = req.getParameter("username");// »ñÈ¡×¢²áÓÃ»§Ãû
+		String username = req.getParameter("username");// å¾—åˆ°ç”¨æˆ·å
 
 		String password = req.getParameter("password");
 		String email = req.getParameter("email");
@@ -31,15 +31,15 @@ public class RegisterServlet extends HttpServlet {
 		
 		int num = rs.addUserDao(account);
 		if (num != 1) {
-			System.out.println("×¢²áÊ§°Ü,ÇëÖØĞÂ×¢²á!");
+			System.out.println("æ³¨å†Œå¤±è´¥!");
 		} else {
-			System.out.println("¹§Ï²Äú,×¢²á³É¹¦!");
-			//1.×¢²á³É¹¦ºó×Ô¶¯µÇÂ¼
+			System.out.println("æ³¨å†ŒæˆåŠŸ!");
+			//1.è®¾å€¼åˆ°session
 			req.getSession().setAttribute("account", account.getAccount());
 			req.getSession().setAttribute("password", account.getPassword());
 			// req.getRequestDispatcher("index.jsp").forward(req, resp);
 			req.getRequestDispatcher("index.jsp").forward(req, resp);
-			//2.×¢²á³É¹¦ºóÖØĞÂÌø×ªÖÁ×¢²áµÇÂ¼½çÃæ,ĞèÒªÖØĞÂµÇÂ¼
+			//2.é‡å®šå‘
 			//resp.sendRedirect("./pages/login_register.jsp");
 		}
 

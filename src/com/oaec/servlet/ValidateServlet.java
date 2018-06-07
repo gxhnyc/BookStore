@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oaec.service.RegisterService;
 /**
- * ´¦ÀíÓÃ»§ÃûÑéÖ¤µÄservlet
+ * éªŒè¯ç”¨æˆ·åæ˜¯å¦å·²å­˜åœ¨
  * @author Yechao
  *
  */
@@ -25,10 +25,10 @@ public class ValidateServlet extends HttpServlet {
 		RegisterService rs=new RegisterService();
 		Map<String,Object> map=rs.validateAccount(account);
 		if(map.size()>0) {
-			System.out.println("ÓÃ»§ÃûÒÑ´æÔÚ!");
-			resp.getWriter().write("0");//ÓÃ»§ÃûÒÑ´æÔÚ
+			System.out.println("ç”¨æˆ·åå·²å­˜åœ¨!");
+			resp.getWriter().write("0");//0ï¼Œç”¨æˆ·åå·²å­˜åœ¨
 		}else {
-			resp.getWriter().write("1");//ÓÃ»§Ãû¿ÉÓÃ
+			resp.getWriter().write("1");//1ï¼Œç”¨æˆ·åå¯ç”¨
 		}
 		
 	}

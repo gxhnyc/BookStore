@@ -19,12 +19,12 @@ public class LoadDetailCartsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 				
-				// 1.µÃµ½ÓÃ»§id
+				// 1.å¾—åˆ°ç”¨æˆ·ID
 				Map<String, Object> map = (Map<String, Object>) req.getSession().getAttribute("userMap");
 				//System.out.println("--userMap:" + map);
 				if(map!=null) {
 					int account_id = Integer.parseInt(map.get("ID").toString());
-					// 2.µ÷ÓÃÒµÎñ²ã,²éÑ¯¹ºÎï³µ·½·¨
+					// 2.å¾—åˆ°è´­ç‰©è½¦å†…å®¹
 					CartService cs = new CartService();
 					List<CartDetails> list = cs.findCartsByAccountID(account_id);					
 					

@@ -107,7 +107,7 @@
 					<li class="quantity"><input name="quantity"
 						value="${cart.quantity }" lang="${cart.quantity }"></li>
 					<li class="total">¥<font name="ft" id="${cart.book_id }">${cart.subtotal }</font></li>
-					<li class="operator"><button name="rmitem" lang="${cart.book_id }">删除</button></li>
+					<li class="operator"><button name="rmitem" >删除</button></li>
 				</ul>
 			</c:forEach>
 		</section>
